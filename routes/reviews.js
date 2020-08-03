@@ -4,7 +4,10 @@ const router = express.Router({
 });
 const {
     getReviews,
-    getReview
+    getReview,
+    addReview,
+    updateReview,
+    deleteReview
 } = require('../controllers/reviews');
 
 const Review = require('../models/Review');
@@ -20,9 +23,12 @@ router.route('/')
         path: 'bootcamp',
         select: 'name description'
     }), getReviews)
+    .post(protect, authorize('user', 'admin'), addReview)
 
 router.route('/:id')
     .get(getReview)
+    .put(protect, authorize('user', 'admin'), updateReview)
+    .delete(protect, authorize('user', 'admin'), deleteReview)
 
 
 
